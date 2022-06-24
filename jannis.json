@@ -1,4 +1,0 @@
-{
-    "metric_names": ["totalUsers", "newUsers"], 
-    "dimension_names": ["country", "date"]
-}

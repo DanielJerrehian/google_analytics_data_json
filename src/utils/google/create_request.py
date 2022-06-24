@@ -2,6 +2,13 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import RunReportRequest, Dimension, Metric, DateRange, OrderBy
 
 
+def create_dimension_order_by(order_by_value):
+    return OrderBy.DimensionOrderBy(dimension_name=order_by_value)
+
+def create_metric_order_by(order_by_value):
+    return OrderBy.MetricOrderBy(metric_name=order_by_value)
+
+
 class Client:
     def __init__(self):
         self.client = None
@@ -11,16 +18,17 @@ class Client:
 
 
 class Request(Client):
-    def __init__(self, property_id : str = "314724906", metric_names : list = [], dimension_names : list = [], order_by : str = "date", start_date : str = None, end_date : str = "today"):
+    def __init__(self, property_id : str = None, dimension_names : list = [], metric_names : list = [], order_by_names : list = [], start_date : str = None, end_date : str = "today"):
         super().__init__()
         self.property_id = property_id
         self.dimension_names = dimension_names
         self.metric_names = metric_names
-        self.order_by = order_by
+        self.order_by_names = order_by_names
         self.start_date = start_date
         self.end_date = end_date
         self.dimensions = []
         self.metrics = []
+        self.order_bys = []
         self.request = None
         self.response = None
 
@@ -31,16 +39,28 @@ class Request(Client):
     def create_metrics(self):
         for metric in self.metric_names:
             self.metrics.append(Metric(name=metric))
+            
+    def create_order_bys(self):
+        # for order_by in self.order_by_names:
+        #     self.order_bys.append(OrderBy(**{order_by["type"] : order_by["function"]}, desc=order_by["descending"]))
+                
+        for order_by in self.order_by_names:   
+            if order_by["type"] == "metric":
+                self.order_bys.append(OrderBy(metric=OrderBy.MetricOrderBy(metric_name=order_by["value"]), desc=order_by["descending"]))
+            elif order_by["type"] == "dimension":
+                self.order_bys.append(OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name=order_by["value"]), desc=order_by["descending"]))
 
     def create_request(self):
         self.request = RunReportRequest(
             property=f"properties/{self.property_id}",
             dimensions=self.dimensions,
             metrics=self.metrics,
-            order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name=self.order_by))],
+            order_bys=self.order_bys,
             date_ranges=[DateRange(start_date=self.start_date, end_date=self.end_date)]
         )
 
     def run_report(self):
         self.response = self.client.run_report(request=self.request)
+
+
 

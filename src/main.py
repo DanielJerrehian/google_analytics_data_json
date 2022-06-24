@@ -9,10 +9,11 @@ def main(metric_object):
 
     load_dotenv(".env")
 
-    request = Request(property_id="314724906", metric_names=metric_object["metric_names"], dimension_names=metric_object["dimension_names"], start_date="2022-06-17")
+    request = Request(property_id=metric_object["property_id"], dimension_names=metric_object["dimension_names"], metric_names=metric_object["metric_names"], order_by_names=metric_object["order_by_names"], start_date=metric_object["start_date"])
     request.create_client()
     request.create_dimensions()
     request.create_metrics()
+    request.create_order_bys()
     request.create_request()
     request.run_report()
     
