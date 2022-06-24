@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timedelta
 
 from src.main import main
-
+from src.metrics.metric_object import metric_object
 
 class TestMain(unittest.TestCase):
     def setUp(self):
@@ -13,5 +13,5 @@ class TestMain(unittest.TestCase):
         self.assertTrue(function_object)
 
     def test_main(self):
-        function_object = main(metric_object={"metric_names": ["activeUsers", "newUsers"], "dimension_names": ["country", "date"]})
-        self.assertTrue(function_object)
+        function_object = main(metric_object=metric_object)
+        self.assertTrue(function_object[0]["country"])

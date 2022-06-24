@@ -2,13 +2,6 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import RunReportRequest, Dimension, Metric, DateRange, OrderBy
 
 
-def create_dimension_order_by(order_by_value):
-    return OrderBy.DimensionOrderBy(dimension_name=order_by_value)
-
-def create_metric_order_by(order_by_value):
-    return OrderBy.MetricOrderBy(metric_name=order_by_value)
-
-
 class Client:
     def __init__(self):
         self.client = None
@@ -40,10 +33,7 @@ class Request(Client):
         for metric in self.metric_names:
             self.metrics.append(Metric(name=metric))
             
-    def create_order_bys(self):
-        # for order_by in self.order_by_names:
-        #     self.order_bys.append(OrderBy(**{order_by["type"] : order_by["function"]}, desc=order_by["descending"]))
-                
+    def create_order_bys(self):               
         for order_by in self.order_by_names:   
             if order_by["type"] == "metric":
                 self.order_bys.append(OrderBy(metric=OrderBy.MetricOrderBy(metric_name=order_by["value"]), desc=order_by["descending"]))

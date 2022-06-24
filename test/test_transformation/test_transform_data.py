@@ -1,5 +1,4 @@
 import unittest
-from datetime import datetime
 
 from src.transformation.transform_data import TransformData
 from src.utils.google.create_request import Request
@@ -7,11 +6,12 @@ from src.utils.google.create_request import Request
 
 class TestTransformData(unittest.TestCase):
     def setUp(self):
-        self.metric_dict = {"metric_names": ["activeUsers", "newUsers"], "dimension_names": ["country", "date"]}
-        request = Request(metric_names=self.metric_dict["metric_names"], dimension_names=self.metric_dict["dimension_names"], start_date="2022-06-17", end_date="2022-06-19")
+        self.metric_dict = {"property_id" : "314724906", "metric_names": ["activeUsers", "newUsers"], "dimension_names": ["country", "date"], "order_by_names": [{"type": "dimension", "value": "date", "descending": False}], "start_date": "2022-06-17", "end_date": "2022-06-19"}
+        request = Request(property_id=self.metric_dict["property_id"], dimension_names=self.metric_dict["dimension_names"], metric_names=self.metric_dict["metric_names"], order_by_names=self.metric_dict["order_by_names"], start_date=self.metric_dict["start_date"], end_date=self.metric_dict["end_date"])
         request.create_client()
         request.create_dimensions()
         request.create_metrics()
+        request.create_order_bys()
         request.create_request()
         request.run_report()
         self.google_analytics_response = request.response

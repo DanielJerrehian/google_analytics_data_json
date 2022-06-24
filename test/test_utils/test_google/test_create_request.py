@@ -25,7 +25,7 @@ class TestClient(unittest.TestCase):
 class TestCreateRequest(unittest.TestCase):
     def setUp(self):
         pass
-
+    
     def test_class_object(self):
         class_object = Request
         self.assertTrue(class_object)
@@ -92,12 +92,12 @@ class TestCreateRequest(unittest.TestCase):
         self.assertEqual(class_object.metrics, [Metric(name="test_metric"), Metric(name="test_metric_2")])
 
     def test_create_order_by_method_single(self):
-        class_object = Request(property_id="abc", dimension_names=["test_dimension", "test_dimension_2"], metric_names=["test_metric", "test_metric_2"], order_by_names=["test_order_by"], start_date="2020-03-31", end_date="2021-03-31")
+        class_object = Request(property_id="abc", dimension_names=["test_dimension", "test_dimension_2"], metric_names=["test_metric", "test_metric_2"], order_by_names=[{"type": "dimension", "value": "test_order_by", "descending": True}], start_date="2020-03-31", end_date="2021-03-31")
         class_object.create_order_bys()
-        self.assertEqual(class_object.order_bys, [OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="test_order_by"))])
+        self.assertEqual(class_object.order_bys, [OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="test_order_by"), desc=True)])
         
     def test_create_order_by_method_multiple(self):
-        class_object = Request(property_id="abc", dimension_names=["test_dimension", "test_dimension_2"], metric_names=["test_metric", "test_metric_2"], order_by_names=["test_order_by", "test_order_by_2"], start_date="2020-03-31", end_date="2021-03-31")
+        class_object = Request(property_id="abc", dimension_names=["test_dimension", "test_dimension_2"], metric_names=["test_metric", "test_metric_2"], order_by_names=[{"type": "dimension", "value": "test_order_by", "descending": False}, {"type": "dimension", "value": "test_order_by_2", "descending": False}], start_date="2020-03-31", end_date="2021-03-31")
         class_object.create_order_bys()
         self.assertEqual(class_object.order_bys, [OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="test_order_by")), OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="test_order_by_2"))])
 
