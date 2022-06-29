@@ -1,5 +1,5 @@
 # Introduction 
-This project is used to fetch data from the Google Analytics GA4 API and write it to a database on AWS on a daily basis using AWS Lambda functions. 
+This project is used to fetch data from the Google Analytics GA4 API using an AWS Lambda function. 
 
 # Getting Started
 To begin, create a virtual environment at the project directory level and install the needed dependencies, listed in the `requirements.txt` file at the same directory level. Next,
