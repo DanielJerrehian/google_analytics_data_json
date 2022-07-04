@@ -1,7 +1,13 @@
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv(".env")
+
 metric_object = {
-    "property_id": "314724906", 
+    "property_id": os.environ.get("BP_BIO_LC_PRODUCTION_PROPERTY_ID"), 
     "metric_names": ["totalUsers"], 
-    "dimension_names": ["country", "date"], 
+    "dimension_names": ["deviceCategory", "date", "country"], 
     "order_by_names": [
         {
             "type": "dimension",

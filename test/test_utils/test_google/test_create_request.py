@@ -1,4 +1,5 @@
 import unittest
+import os
 from google.analytics.data_v1beta.types import Dimension, Metric, OrderBy
 
 from src.utils.google.create_request import Client, Request
@@ -102,7 +103,7 @@ class TestCreateRequest(unittest.TestCase):
         self.assertEqual(class_object.order_bys, [OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="test_order_by")), OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="test_order_by_2"))])
 
     def test_create_request_method(self):
-        class_object = Request(property_id="314724906", dimension_names=["city"], metric_names=["activeUsers"], start_date="2020-03-31", end_date="2021-03-31")
+        class_object = Request(property_id=os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), dimension_names=["city"], metric_names=["activeUsers"], start_date="2020-03-31", end_date="2021-03-31")
         class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
@@ -111,7 +112,7 @@ class TestCreateRequest(unittest.TestCase):
         self.assertTrue(class_object.request)
 
     def test_run_report_method_active_users_by_country_by_date(self):
-        class_object = Request(property_id="314724906", dimension_names=["country", "date"], metric_names=["activeUsers"], order_by_names=[], start_date="2022-05-31", end_date="2022-06-02")
+        class_object = Request(property_id=os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), dimension_names=["country", "date"], metric_names=["activeUsers"], order_by_names=[], start_date="2022-05-31", end_date="2022-06-02")
         class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
@@ -121,7 +122,7 @@ class TestCreateRequest(unittest.TestCase):
         self.assertEqual(class_object.response.row_count, 9)
 
     def test_run_report_method_sessions_per_user(self):
-        class_object = Request(property_id="314724906", dimension_names=["date"], metric_names=["sessionsPerUser"], order_by_names=["date"], start_date="2022-05-31", end_date="2022-06-02")
+        class_object = Request(property_id=os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), dimension_names=["date"], metric_names=["sessionsPerUser"], order_by_names=["date"], start_date="2022-05-31", end_date="2022-06-02")
         class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
@@ -130,7 +131,7 @@ class TestCreateRequest(unittest.TestCase):
         self.assertEqual(class_object.response.row_count, 3)
 
     def test_run_report_method_event_count_by_event_name(self):
-        class_object = Request(property_id="314724906", dimension_names=["eventName", "browser", "date"], metric_names=["eventCount"], order_by_names=[], start_date="2022-05-31", end_date="2022-06-02")
+        class_object = Request(property_id=os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), dimension_names=["eventName", "browser", "date"], metric_names=["eventCount"], order_by_names=[], start_date="2022-05-31", end_date="2022-06-02")
         class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
@@ -140,7 +141,7 @@ class TestCreateRequest(unittest.TestCase):
         self.assertEqual(class_object.response.rows[0].metric_values[0].value, "184")
 
     def test_run_report_method_multiple_metrics_multiple_dimensions(self):
-        class_object = Request(property_id="314724906", dimension_names=["browser", "date"], metric_names=["activeUsers", "newUsers"], order_by_names=["date"], start_date="2022-05-31", end_date="2022-06-01")
+        class_object = Request(property_id=os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), dimension_names=["browser", "date"], metric_names=["activeUsers", "newUsers"], order_by_names=["date"], start_date="2022-05-31", end_date="2022-06-01")
         class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()

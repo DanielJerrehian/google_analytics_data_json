@@ -1,4 +1,5 @@
 import unittest
+import os
 
 from src.transformation.transform_data import TransformData
 from src.utils.google.create_request import Request
@@ -6,7 +7,7 @@ from src.utils.google.create_request import Request
 
 class TestTransformData(unittest.TestCase):
     def setUp(self):
-        self.metric_dict = {"property_id" : "314724906", "metric_names": ["activeUsers", "newUsers"], "dimension_names": ["country", "date"], "order_by_names": [{"type": "dimension", "value": "date", "descending": False}], "start_date": "2022-06-17", "end_date": "2022-06-19"}
+        self.metric_dict = {"property_id" : os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), "metric_names": ["activeUsers", "newUsers"], "dimension_names": ["country", "date"], "order_by_names": [{"type": "dimension", "value": "date", "descending": False}], "start_date": "2022-06-17", "end_date": "2022-06-19"}
         request = Request(property_id=self.metric_dict["property_id"], dimension_names=self.metric_dict["dimension_names"], metric_names=self.metric_dict["metric_names"], order_by_names=self.metric_dict["order_by_names"], start_date=self.metric_dict["start_date"], end_date=self.metric_dict["end_date"])
         request.create_client()
         request.create_dimensions()
