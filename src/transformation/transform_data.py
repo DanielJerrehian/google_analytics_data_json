@@ -1,6 +1,5 @@
 class TransformData:
-    def __init__(self, metric_dict : dict = None, google_analytics_response : object = None):
-        self.metric_dict = metric_dict
+    def __init__(self, google_analytics_response : object = None):
         self.google_analytics_response = google_analytics_response
         self.dimension_headers = []
         self.metric_headers = []

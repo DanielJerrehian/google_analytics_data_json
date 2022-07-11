@@ -7,12 +7,13 @@ from src.utils.google.create_request import Request
 
 class TestTransformData(unittest.TestCase):
     def setUp(self):
-        self.metric_dict = {"property_id" : os.environ.get("BP_BIO_LC_TEST_PROPERTY_ID"), "metric_names": ["activeUsers", "newUsers"], "dimension_names": ["country", "date"], "order_by_names": [{"type": "dimension", "value": "date", "descending": False}], "start_date": "2022-06-17", "end_date": "2022-06-19"}
-        request = Request(property_id=self.metric_dict["property_id"], dimension_names=self.metric_dict["dimension_names"], metric_names=self.metric_dict["metric_names"], order_by_names=self.metric_dict["order_by_names"], start_date=self.metric_dict["start_date"], end_date=self.metric_dict["end_date"])
+        self.analytics_dictionary = {"property_id" : os.environ.get("GOOGLE_ANALYTICS_PROPERTY_ID"), "metric_names": ["activeUsers", "newUsers", "totalUsers"], "dimension_names": ["country", "date"], "order_by_names": [{"type": "dimension", "value": "date", "descending": False}],  "date_range_values": [{"start_date": "2022-06-17", "end_date": "2022-06-19"}]}
+        request = Request(property_id=self.analytics_dictionary["property_id"], dimension_names=self.analytics_dictionary["dimension_names"], metric_names=self.analytics_dictionary["metric_names"], order_by_names=self.analytics_dictionary["order_by_names"], date_range_values=self.analytics_dictionary["date_range_values"])
         request.create_client()
         request.create_dimensions()
         request.create_metrics()
         request.create_order_bys()
+        request.create_date_ranges()
         request.create_request()
         request.run_report()
         self.google_analytics_response = request.response
@@ -23,33 +24,35 @@ class TestTransformData(unittest.TestCase):
 
     def test_class_variables(self):
         class_object = TransformData()
-        self.assertEqual(class_object.metric_dict, None)
         self.assertEqual(class_object.google_analytics_response, None)
         self.assertEqual(class_object.dimension_headers, [])
         self.assertEqual(class_object.metric_headers, [])
         self.assertEqual(class_object.transformed_data, [])
 
     def test_pass_arguments(self):
-        class_object = TransformData(metric_dict=self.metric_dict, google_analytics_response=self.google_analytics_response)
-        self.assertEqual(class_object.metric_dict, self.metric_dict)
+        class_object = TransformData(google_analytics_response=self.google_analytics_response)
         self.assertEqual(class_object.google_analytics_response, self.google_analytics_response)
         self.assertEqual(class_object.dimension_headers, [])
         self.assertEqual(class_object.metric_headers, [])
         self.assertEqual(class_object.transformed_data, [])
 
-    def test_to_dict_method(self):
-        class_object = TransformData(metric_dict=self.metric_dict, google_analytics_response=self.google_analytics_response)
+    def test_to_dict_method_single_date_range(self):
+        class_object = TransformData(google_analytics_response=self.google_analytics_response)
         class_object.to_dict()
-        self.assertEqual(class_object.transformed_data,
-            [
-                {'country': 'United Kingdom', 'date': '20220617', 'activeUsers': '59', 'newUsers': '49'}, 
-                {'country': 'United States', 'date': '20220617', 'activeUsers': '48', 'newUsers': '44'}, 
-                {'country': 'India', 'date': '20220617', 'activeUsers': '3', 'newUsers': '0'}, 
-                {'country': 'Canada', 'date': '20220617', 'activeUsers': '1', 'newUsers': '0'}, 
-                {'country': 'United Kingdom', 'date': '20220618', 'activeUsers': '2', 'newUsers': '0'}, 
-                {'country': 'United States', 'date': '20220618', 'activeUsers': '1', 'newUsers': '1'}, 
-                {'country': 'United States', 'date': '20220619', 'activeUsers': '2', 'newUsers': '2'}, 
-                {'country': 'United Kingdom', 'date': '20220619', 'activeUsers': '1', 'newUsers': '0'}
-            ]
-        )
+        self.assertEqual(class_object.transformed_data[0]["date"], "20220617")
+        
+    def test_to_dict_method_multiple_date_ranges(self):
+        other_analytics_dictionary = {"property_id" : os.environ.get("GOOGLE_ANALYTICS_PROPERTY_ID"), "metric_names": ["totalUsers"], "dimension_names": ["country"], "order_by_names": [{"type": "dimension", "value": "country", "descending": True}],  "date_range_values": [{"start_date": "2022-06-17", "end_date": "2022-06-19"}, {"start_date": "2022-06-25", "end_date": "2022-06-27"} ]}
+        request = Request(property_id=other_analytics_dictionary["property_id"], dimension_names=other_analytics_dictionary["dimension_names"], metric_names=other_analytics_dictionary["metric_names"], order_by_names=other_analytics_dictionary["order_by_names"], date_range_values=other_analytics_dictionary["date_range_values"])
+        request.create_client()
+        request.create_dimensions()
+        request.create_metrics()
+        request.create_order_bys()
+        request.create_date_ranges()
+        request.create_request()
+        request.run_report()
+        other_google_analytics_response = request.response
+        class_object = TransformData(google_analytics_response=other_google_analytics_response)
+        class_object.to_dict()
+        self.assertEqual(class_object.transformed_data[0]['country'], "United States")
         
