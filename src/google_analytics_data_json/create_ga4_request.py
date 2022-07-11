@@ -2,7 +2,7 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import RunReportRequest, Dimension, Metric, DateRange, OrderBy
 
 
-class Client:
+class Ga4Client:
     def __init__(self):
         self.client = None
 
@@ -10,7 +10,7 @@ class Client:
         self.client = BetaAnalyticsDataClient()
 
 
-class Request(Client):
+class Ga4Request(Ga4Client):
     def __init__(self, property_id : str = None, dimension_names : list = [], metric_names : list = [], order_by_names : list = [], date_range_values : list = []):
         super().__init__()
         self.property_id = property_id

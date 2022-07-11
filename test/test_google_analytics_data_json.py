@@ -1,8 +1,7 @@
 import unittest
-from datetime import datetime, timedelta
 import os
 
-from src.main import main
+from src.google_analytics_data_json.google_analytics_data_json import run_report_return_json
 
 
 class TestMain(unittest.TestCase):
@@ -19,9 +18,9 @@ class TestMain(unittest.TestCase):
         }
 
     def test_function_object(self):
-        function_object = main
+        function_object = run_report_return_json
         self.assertTrue(function_object)
 
     def test_main(self):
-        function_object = main(analytics_dictionary=self.analytics_dictionary)
+        function_object = run_report_return_json(analytics_dictionary=self.analytics_dictionary)
         self.assertTrue(function_object[0]["country"])

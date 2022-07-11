@@ -1,4 +1,4 @@
-class TransformData:
+class TransformGa4Data:
     def __init__(self, google_analytics_response : object = None):
         self.google_analytics_response = google_analytics_response
         self.dimension_headers = []

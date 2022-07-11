@@ -1,8 +1,8 @@
-from src.utils.google.create_request import Request
-from src.transformation.transform_data import TransformData
+from src.google_analytics_data_json.create_ga4_request import Ga4Request
+from src.google_analytics_data_json.transform_ga4_data import TransformGa4Data
 
 
-def main(analytics_dictionary : dict = {}):
+def run_report_return_json(analytics_dictionary : dict = {}):
     '''
     An example analytics dictionary:
         {
@@ -17,7 +17,7 @@ def main(analytics_dictionary : dict = {}):
         }
     '''
     
-    request = Request(
+    request = Ga4Request(
         property_id=analytics_dictionary["property_id"], 
         dimension_names=analytics_dictionary["dimension_names"], 
         metric_names=analytics_dictionary["metric_names"], 
@@ -32,7 +32,7 @@ def main(analytics_dictionary : dict = {}):
     request.create_request()
     request.run_report()
 
-    transform_data = TransformData(google_analytics_response=request.response)
+    transform_data = TransformGa4Data(google_analytics_response=request.response)
     transform_data.to_dict()
 
     return transform_data.transformed_data
