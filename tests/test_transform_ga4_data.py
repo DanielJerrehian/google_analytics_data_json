@@ -1,8 +1,8 @@
 import unittest
 import os
 
-from src.google_analytics_data_json.transform_ga4_data import TransformGa4Data
-from src.google_analytics_data_json.create_ga4_request import Ga4Request
+from google_analytics_data_json.transform_ga4_data import TransformGa4Data
+from google_analytics_data_json.create_ga4_request import Ga4Request
 
 
 class TestTransformData(unittest.TestCase):

@@ -1,5 +1,5 @@
-from src.google_analytics_data_json.create_ga4_request import Ga4Request
-from src.google_analytics_data_json.transform_ga4_data import TransformGa4Data
+from google_analytics_data_json.create_ga4_request import Ga4Request
+from google_analytics_data_json.transform_ga4_data import TransformGa4Data
 
 
 def run_report_return_json(analytics_dictionary : dict = {}):
