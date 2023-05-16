@@ -48,6 +48,10 @@ Although multiple date ranges can be used, the results from the API can be confu
 If you would like to take advantage of only the API call or only the data transformation, you can import the classes `Ga4Request` from `create_ga4_request.py` or `TransformGa4Data` from `transform_ga4_data.py`. This allows you to control the exact methods which are called in each class, although in most cases you will use all of them.
 
 # Build and Test
-The build and tests for the project are hosted here: https://github.com/DanielJerrehian/google_analytics_data_json <br>
+The build and tests for the project are hosted here: https://github.com/DanielJerrehian/google_analytics_data_json
+
 The command `python -m unittest` can be used to run the unit tests. A coverage report can also be generated using `coverage run -m unittest` and then running `coverage html`.
 
+The following environment variables should be set for unit tests:
+* `GOOGLE_APPLICATION_CREDENTIALS`
+* `GOOGLE_ANALYTICS_PROPERTY_ID`
