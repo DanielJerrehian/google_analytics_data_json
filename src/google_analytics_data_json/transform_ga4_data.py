@@ -23,3 +23,8 @@ class TransformGa4Data:
                 transformed_row[metric_header] = metric_value.value
 
             self.transformed_data.append(transformed_row)
+
+    def to_dict(self) -> List[dict]:
+        self.generate_dict()
+        return self.transformed_data
+    

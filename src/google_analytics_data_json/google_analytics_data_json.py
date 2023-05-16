@@ -1,8 +1,9 @@
+from typing import List
 from google_analytics_data_json.create_ga4_request import Ga4Request
 from google_analytics_data_json.transform_ga4_data import TransformGa4Data
 
 
-def run_report_return_json(analytics_dictionary : dict = {}):
+def run_report_return_json(analytics_dictionary : dict = {}) -> List[dict]:
     '''
     An example analytics dictionary:
         {
@@ -28,6 +29,4 @@ def run_report_return_json(analytics_dictionary : dict = {}):
     request.run_report()
 
     transform_data = TransformGa4Data(google_analytics_response=request.response)
-    transform_data.generate_dict()
-
-    return transform_data.transformed_data
+    return transform_data.to_dict()
