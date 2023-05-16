@@ -3,10 +3,7 @@ from google.analytics.data_v1beta.types import RunReportRequest, Dimension, Metr
 
 
 class Ga4Client:
-    def __init__(self):
-        self.client = None
-
-    def create_client(self):
+    def __init__(self, ):
         self.client = BetaAnalyticsDataClient()
 
 
@@ -54,7 +51,6 @@ class Ga4Request(Ga4Client):
         )
 
     def create_internal_properties(self):
-        self.create_client()
         self.create_dimensions()
         self.create_metrics()
         self.create_order_bys()

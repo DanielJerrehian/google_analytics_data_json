@@ -13,13 +13,8 @@ class TestClient(unittest.TestCase):
         class_object = Ga4Client
         self.assertTrue(class_object)
 
-    def test_class_variables(self):
-        class_object = Ga4Client()
-        self.assertEqual(class_object.client, None)
-
     def test_create_client_method(self):
         class_object = Ga4Client()
-        class_object.create_client()
         self.assertTrue(class_object.client)
 
 
@@ -112,7 +107,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_create_request_method(self):
         class_object = Ga4Request(property_id=self.property_id, dimension_names=["city"], metric_names=["activeUsers"], date_range_values=[{"start_date": "2020-03-31", "end_date": "2021-03-31"}])
-        class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
         class_object.create_order_bys()
@@ -122,7 +116,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_run_report_method_active_users_by_country_by_date(self):
         class_object = Ga4Request(property_id=self.property_id, dimension_names=["country", "date"], metric_names=["activeUsers"], order_by_names=[{"type": "dimension", "value": "date", "descending": False}], date_range_values=[{"start_date": "2022-05-31", "end_date": "2022-06-02"}])
-        class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
         class_object.create_order_bys()
@@ -133,7 +126,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_run_report_method_sessions_per_user(self):
         class_object = Ga4Request(property_id=self.property_id, dimension_names=["date"], metric_names=["sessionsPerUser"], order_by_names=[{"type": "dimension", "value": "date", "descending": False}], date_range_values=[{"start_date": "2022-05-31", "end_date": "2022-06-02"}])
-        class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
         class_object.create_order_bys()
@@ -144,7 +136,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_run_report_method_event_count_by_event_name(self):
         class_object = Ga4Request(property_id=self.property_id, dimension_names=["eventName", "browser", "date"], metric_names=["eventCount"], order_by_names=[], date_range_values=[{"start_date": "2022-05-31", "end_date": "2022-06-02"}])
-        class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
         class_object.create_order_bys()
@@ -156,7 +147,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_run_report_method_multiple_metrics_multiple_dimensions(self):
         class_object = Ga4Request(property_id=self.property_id, dimension_names=["browser", "date"], metric_names=["activeUsers", "newUsers"], order_by_names=[{"type": "dimension", "value": "date", "descending": False}], date_range_values=[{"start_date": "2022-05-31", "end_date": "2022-06-01"}])
-        class_object.create_client()
         class_object.create_dimensions()
         class_object.create_metrics()
         class_object.create_order_bys()
