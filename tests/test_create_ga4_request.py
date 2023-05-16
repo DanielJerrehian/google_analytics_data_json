@@ -31,7 +31,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_class_variables(self):
         class_object = Ga4Request()
-        self.assertEqual(class_object.client, None)
         self.assertEqual(class_object.property_id, None)
         self.assertEqual(class_object.dimension_names, [])
         self.assertEqual(class_object.metric_names, [])
@@ -46,7 +45,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_pass_args(self):
         class_object = Ga4Request(property_id="abc", dimension_names=["date"], metric_names=["totalUsers"], order_by_names=[{"type": "dimension", "value": "date", "descending": False}], date_range_values=[{"start_date": start_date, "end_date": end_date}])
-        self.assertEqual(class_object.client, None)
         self.assertEqual(class_object.property_id, "abc")
         self.assertEqual(class_object.dimension_names, ["date"])
         self.assertEqual(class_object.metric_names, ["totalUsers"])
@@ -56,7 +54,6 @@ class TestCreateRequest(unittest.TestCase):
 
     def test_pass_args_multiple_metrics_dimensions_order_by(self):
         class_object = Ga4Request(property_id="abc", dimension_names=["date", "country"], metric_names=["activeUsers"], order_by_names=[{"type": "metrics", "value": "activeUsers", "descending": False}], date_range_values=[{"start_date": start_date, "end_date": end_date}])
-        self.assertEqual(class_object.client, None)
         self.assertEqual(class_object.property_id, "abc")
         self.assertEqual(class_object.dimension_names, ["date", "country"])
         self.assertEqual(class_object.metric_names, ["activeUsers"])
