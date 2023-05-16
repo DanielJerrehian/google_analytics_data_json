@@ -23,7 +23,7 @@ class TestClient(unittest.TestCase):
 
 class TestCreateRequest(unittest.TestCase):
     def setUp(self):
-        self.property_id = os.environ.get("GOOGLE_ANALYTICS_PROPERTY_ID")
+        self.property_id = os.environ["GOOGLE_ANALYTICS_PROPERTY_ID"] # errors if it's not set, intentionally
 
     def test_class_object(self):
         class_object = Ga4Request

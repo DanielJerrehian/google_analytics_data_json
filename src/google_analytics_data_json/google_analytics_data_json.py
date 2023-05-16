@@ -24,7 +24,7 @@ def run_report_return_json(analytics_dictionary : dict = {}):
         order_by_names=analytics_dictionary["order_by_names"], 
         date_range_values=analytics_dictionary["date_range_values"]
     )
-    
+    request.create_internal_properties()
     request.run_report()
 
     transform_data = TransformGa4Data(google_analytics_response=request.response)
