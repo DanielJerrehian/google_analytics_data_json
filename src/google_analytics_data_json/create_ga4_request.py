@@ -53,8 +53,13 @@ class Ga4Request(Ga4Client):
             date_ranges=self.date_ranges
         )
 
+    def create_internal_properties(self):
+        self.create_client()
+        self.create_dimensions()
+        self.create_metrics()
+        self.create_order_bys()
+        self.create_date_ranges()
+        self.create_request()
+
     def run_report(self):
         self.response = self.client.run_report(request=self.request)
-
-
-

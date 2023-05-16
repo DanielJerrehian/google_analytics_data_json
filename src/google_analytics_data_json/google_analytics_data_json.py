@@ -24,15 +24,10 @@ def run_report_return_json(analytics_dictionary : dict = {}):
         order_by_names=analytics_dictionary["order_by_names"], 
         date_range_values=analytics_dictionary["date_range_values"]
     )
-    request.create_client()
-    request.create_dimensions()
-    request.create_metrics()
-    request.create_order_bys()
-    request.create_date_ranges()
-    request.create_request()
+    
     request.run_report()
 
     transform_data = TransformGa4Data(google_analytics_response=request.response)
-    transform_data.to_dict()
+    transform_data.generate_dict()
 
     return transform_data.transformed_data
