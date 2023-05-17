@@ -6,6 +6,11 @@ from typing import Union
 
 class Ga4Client:
     def __init__(self, service_account_credentials: Union[service_account.Credentials, None] = None):
+        """
+        `service_account_credentials` can be created with: 
+            1. `service_account.Credentials.from_service_account_info(json_file_contents_as_dict)`
+            2. `service_account.Credentials.from_service_account_file(path_to_json_file)`
+        """
         if service_account_credentials:
             self.client = BetaAnalyticsDataClient(credentials=service_account_credentials)
         else:
