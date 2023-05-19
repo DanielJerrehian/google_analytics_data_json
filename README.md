@@ -4,16 +4,12 @@ This package simplifies fetching and transforming data from the Google Analytics
 # Installation
 `pip install google-analytics-data-json`
 
-# Getting Started
-
-## Environment Variables
+# Environment Variables
 1. After installing the package in your virtual environment, add the `credentials.json` file to your project.
 2. Optional: Set an environment variable named `GOOGLE_APPLICATION_CREDENTIALS` equal to the path of the previously mentioned `credentials.json` file.
 3. Optional: Set the `GOOGLE_ANALYTICS_PROPERTY_ID` environment variable (required for unit tests).
 
-
-
-## Running The Project and Examples
+# Running The Project and Examples
 The simpelest way to run the project is to import the function `run_report_return_json(...)` from the file `google_analytics_data_json`. This function takes one parameter called an `analytics_dictionary`, which is used to fetch data from the API and return it in JSON format. The structure of the analytics dictionary should look like:
 
 ```python

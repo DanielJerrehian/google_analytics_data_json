@@ -1,8 +1,8 @@
+from typing import Union
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import RunReportRequest, Dimension, Metric, DateRange, OrderBy
 from google.oauth2 import service_account
 
-from typing import Union
 
 class Ga4Client:
     def __init__(self, service_account_credentials: Union[service_account.Credentials, None] = None):
@@ -14,12 +14,12 @@ class Ga4Client:
         if service_account_credentials:
             self.client = BetaAnalyticsDataClient(credentials=service_account_credentials)
         else:
-            self.client = BetaAnalyticsDataClient() # will pull creds from GOOGLE_APPLICATION_CREDENTIALS environment variable
+            self.client = BetaAnalyticsDataClient() # Will use credentials from GOOGLE_APPLICATION_CREDENTIALS environment variables
 
 
 class Ga4Request(Ga4Client):
     def __init__(self, property_id : str = None, dimension_names : list = [], metric_names : list = [], order_by_names : list = [], date_range_values : list = [], service_account_credentials: Union[service_account.Credentials, None] = None):
-        super().__init__(service_account_credentials)
+        super().__init__(service_account_credentials=service_account_credentials)
         self.property_id = property_id
         self.dimension_names = dimension_names
         self.metric_names = metric_names
@@ -30,7 +30,6 @@ class Ga4Request(Ga4Client):
         self.order_bys = []
         self.date_ranges = []
         self.request = None
-        self.response = None
 
     def create_dimensions(self):
         for dimension in self.dimension_names:

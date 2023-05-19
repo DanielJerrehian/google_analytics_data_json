@@ -3,6 +3,7 @@ from google_analytics_data_json.create_ga4_request import Ga4Request
 from google_analytics_data_json.transform_ga4_data import TransformGa4Data
 from google.oauth2 import service_account
 
+
 def run_report_return_json(analytics_dictionary : dict = {}, service_account_credentials: Union[service_account.Credentials, None] = None) -> List[dict]:
     """
     An example analytics dictionary:
