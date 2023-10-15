@@ -1,11 +1,14 @@
+from typing import List
+
 class TransformGa4Data:
     def __init__(self, google_analytics_response : object = None):
         self.google_analytics_response = google_analytics_response
         self.dimension_headers = []
         self.metric_headers = []
-        self.transformed_data = []
+        self.transformed_data: List[dict] = []
 
-    def to_dict(self):
+    def generate_dict(self):
+        """ Fills `self.transformed_data` with a list of dicts. """
         for dimension_header in self.google_analytics_response.dimension_headers:
             self.dimension_headers.append(dimension_header.name)
 
@@ -20,3 +23,8 @@ class TransformGa4Data:
                 transformed_row[metric_header] = metric_value.value
 
             self.transformed_data.append(transformed_row)
+
+    def to_dict(self) -> List[dict]:
+        self.generate_dict()
+        return self.transformed_data
+    

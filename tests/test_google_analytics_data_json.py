@@ -3,6 +3,9 @@ import os
 
 from src.google_analytics_data_json.google_analytics_data_json import run_report_return_json 
 
+from datetime import datetime, timedelta
+start_date = (datetime.utcnow() - timedelta(days=30)).strftime('%Y-%m-%d')
+end_date = (datetime.utcnow() - timedelta(days=1)).strftime('%Y-%m-%d')
 
 class TestMain(unittest.TestCase):
     def setUp(self):
@@ -14,7 +17,7 @@ class TestMain(unittest.TestCase):
                 {"type": "dimension", "value": "date", "descending": False},
                 {"type": "metric", "value": "totalUsers", "descending": True},
             ],
-            "date_range_values":[{"start_date": "2022-05-31", "end_date": "2022-06-02"}]
+            "date_range_values":[{"start_date": start_date, "end_date": end_date}]
         }
 
     def test_function_object(self):
